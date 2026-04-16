@@ -76,6 +76,8 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     except ValueError as e:
         logger.error(f"Validation error: {e}")
+        import traceback
+        logger.error(f"Traceback: {traceback.format_exc()}")
         await update.message.reply_text(
             "No pude identificar el tipo de tarea. ¿Es para la universidad, trabajo o algo personal?"
         )
@@ -117,6 +119,8 @@ async def handle_voice(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     except ValueError as e:
         logger.error(f"Validation error: {e}")
+        import traceback
+        logger.error(f"Traceback: {traceback.format_exc()}")
         await update.message.reply_text(
             "No pude identificar el tipo de tarea. ¿Es para la universidad, trabajo o algo personal?"
         )

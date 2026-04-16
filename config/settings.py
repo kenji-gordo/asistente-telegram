@@ -1,7 +1,10 @@
 import json
+import logging
 import os
 from pathlib import Path
 from dotenv import load_dotenv
+
+logger = logging.getLogger(__name__)
 
 # Load environment variables
 load_dotenv()
@@ -22,8 +25,12 @@ class Settings:
     def ensure_credentials(self):
         """Create credentials.json from env var if it doesn't exist"""
         if not self.CREDENTIALS_PATH.exists() and self.GOOGLE_CREDENTIALS_JSON:
-            with open(self.CREDENTIALS_PATH, "w") as f:
-                f.write(self.GOOGLE_CREDENTIALS_JSON)
+            try:
+                creds_data = json.loads(self.GOOGLE_CREDENTIALS_JSON)
+                with open(self.CREDENTIALS_PATH, "w") as f:
+                    json.dump(creds_data, f, indent=2)
+            except json.JSONDecodeError as e:
+                logger.error(f"Invalid GOOGLE_CREDENTIALS JSON: {e}")
 
 
 settings = Settings()
