@@ -34,7 +34,7 @@ async def run_bot():
 
     # Start polling
     polling_task = asyncio.create_task(
-        app.updater.start_polling(drop_pending_updates=False, allowed_updates=["message", "voice"])
+        app.updater.start_polling(drop_pending_updates=True, allowed_updates=["message", "voice"])
     )
 
     # Wait a bit to see if polling starts correctly
