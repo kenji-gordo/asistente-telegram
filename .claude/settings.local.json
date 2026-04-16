@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pip show *)",
+      "Bash(rm -rf __pycache__ bot/__pycache__ services/__pycache__ models/__pycache__ config/__pycache__)",
+      "Bash(python main.py)",
+      "Bash(tasklist)",
+      "Bash(python -c \"from telegram.ext import Application; print\\(Application.builder\\(\\).build\\(\\)\\)\")",
+      "Bash(python -m py_compile bot/telegram_bot.py services/extractor.py services/transcriber.py services/calendar_service.py)",
+      "Bash(python -c ' *)",
+      "Bash(taskkill /F /IM python.exe)",
+      "Bash(taskkill //F //IM python.exe)",
+      "Bash(git init *)",
+      "Bash(git add *)",
+      "Bash(git commit *)"
+    ]
+  }
+}
