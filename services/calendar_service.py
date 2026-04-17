@@ -25,7 +25,7 @@ class CalendarService:
         """Load or refresh Google OAuth credentials"""
         if self._credentials is None:
             creds = None
-            creds_file = settings.CREDENTIALS_PATH
+            creds_file = settings.get_credentials_path()
 
             # Check if token file exists
             token_file = creds_file.parent / "token.json"
