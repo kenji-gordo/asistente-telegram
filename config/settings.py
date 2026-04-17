@@ -25,13 +25,16 @@ class Settings:
 
     def ensure_credentials(self):
         """Create credentials.json from env var if needed"""
-        if not self.CREDENTIALS_PATH.exists() and self.GOOGLE_CREDENTIALS_JSON:
+        if self.GOOGLE_CREDENTIALS_JSON:
             try:
                 creds_data = json.loads(self.GOOGLE_CREDENTIALS_JSON)
                 with open(self.CREDENTIALS_PATH, "w") as f:
                     json.dump(creds_data, f, indent=2)
+                logger.info(f"Credentials written to {self.CREDENTIALS_PATH}")
             except json.JSONDecodeError as e:
                 logger.error(f"Invalid GOOGLE_CREDENTIALS JSON: {e}")
+        else:
+            logger.warning("GOOGLE_CREDENTIALS env var is empty")
 
     def get_credentials_path(self) -> Path:
         """Get credentials path, creating from env if needed"""
