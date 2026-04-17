@@ -2,6 +2,7 @@ import logging
 import asyncio
 from datetime import timedelta
 from google.oauth2 import credentials
+from google.auth.transport.requests import Request
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
@@ -36,7 +37,7 @@ class CalendarService:
             # If no valid credentials, run OAuth flow
             if not creds or not creds.valid:
                 if creds and creds.expired and creds.refresh_token:
-                    creds.refresh()
+                    creds.refresh(Request())
                 else:
                     flow = InstalledAppFlow.from_client_secrets_file(
                         str(creds_file), SCOPES
