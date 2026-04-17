@@ -21,6 +21,7 @@ class Settings:
     GOOGLE_CALENDAR_ID: str = os.getenv("GOOGLE_CALENDAR_ID", "")
     CREDENTIALS_PATH: Path = PROJECT_ROOT / "credentials.json"
     GOOGLE_CREDENTIALS_JSON: str = os.getenv("GOOGLE_CREDENTIALS", "")
+    GOOGLE_TOKEN_JSON: str = os.getenv("GOOGLE_TOKEN", "")
 
     def ensure_credentials(self):
         """Create credentials.json from env var if needed"""
@@ -36,6 +37,18 @@ class Settings:
         """Get credentials path, creating from env if needed"""
         self.ensure_credentials()
         return self.CREDENTIALS_PATH
+
+    def get_token_path(self) -> Path:
+        """Get token path, creating from env if needed"""
+        token_file = self.CREDENTIALS_PATH.parent / "token.json"
+        if not token_file.exists() and self.GOOGLE_TOKEN_JSON:
+            try:
+                token_data = json.loads(self.GOOGLE_TOKEN_JSON)
+                with open(token_file, "w") as f:
+                    json.dump(token_data, f)
+            except json.JSONDecodeError as e:
+                logger.error(f"Invalid GOOGLE_TOKEN JSON: {e}")
+        return token_file
 
 
 settings = Settings()

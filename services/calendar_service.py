@@ -28,7 +28,7 @@ class CalendarService:
             creds_file = settings.get_credentials_path()
 
             # Check if token file exists
-            token_file = creds_file.parent / "token.json"
+            token_file = settings.get_token_path()
             if token_file.exists():
                 from google.oauth2.credentials import Credentials
                 creds = Credentials.from_authorized_user_file(str(token_file), SCOPES)
